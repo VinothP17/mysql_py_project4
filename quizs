@@ -1,0 +1,69 @@
+---mysql---
+
+create database alt;
+use alt;
+create table questions(
+id int(11) auto_increment,
+question varchar(255),
+option_1 varchar(255),
+option_2 varchar(255),
+option_3 varchar(255),
+option_4 varchar(255),
+answer int,
+primary key(id)
+);
+INSERT INTO questions (question,option_1,option_2, option_3, option_4, answer) VALUES
+('What is the capital of France?', 'Paris', 'London', 'Berlin', 'Madrid', 1),
+('Which planet is known as the Red Planet?', 'Venus', 'Jupiter', 'Mars', 'Saturn', 3),
+('Who painted the Mona Lisa?', 'Leonardo da Vinci', 'Pablo Picasso', 'Vincent van Gogh', 'Michelangelo', 1),
+('What is the largest ocean on Earth?', 'Atlantic Ocean', 'Arctic Ocean', 'Indian Ocean', 'Pacific Ocean', 4),
+('What is the chemical symbol for gold?', 'Au', 'Ag', 'Cu', 'Fe', 1);
+select * from questions;
+
+
+---python connectivity---
+
+import mysql.connector
+mydb=mysql.connector.connect(
+  host="localhost",
+  user="root",
+  password="root",
+  database="s"
+  )
+
+mycursor=mydb.cursor()
+def display_questions():
+    a="select *from questions"
+    mycursor.execute(a)
+    question_1=mycursor.fetchall()
+    for question in question_1:
+        print("Question:",question[1])
+        print("Option:")
+        print("1.", question[2])
+        print("2.", question[3])
+        print("3.", question[4])
+        print("4.", question[5])
+
+def take_quiz():
+    score=0
+    a="select *from questions"
+    mycursor.execute(a)
+    question_1=mycursor.fetchall()
+    for question in question_1:
+        print("Question:",question[1])
+        print("Option:")
+        print("1.", question[2])
+        print("2.", question[3])
+        print("3.", question[4])
+        print("4.", question[5])
+        print("Enter the option (1-4):",)
+        print()
+        user_answer=int(input())
+        if user_answer==question[6]:
+            score+=1
+    print("Quiz completed! your score is :",score)
+print("Welcome to the quiz competition!")
+print("Here are the questions")
+print()
+display_questions()
+take_quiz()
